@@ -1,16 +1,32 @@
 func construct2DArray(original []int, m int, n int) [][]int {
-    length := len(original)
-    new := make([][]int, 0, m)
+	/*
+		Notes
+		-----
+		The function follows these steps:
+		- Verify if the product `m * n` matches the length of `original`.
+		- Return an empty list if the total number of elements does not match.
+		- Initialize an empty list `ans` to store the final 2D array.
+		- Use a loop to iterate through `original` and build subarrays of length `n`.
+		- Append each completed subarray to `ans` and reset `subarray` for the next row.
+		- Return `ans` after processing all elements.
+	*/
 
-    // early exit if original array is to long to fit into an mxn 2d array 
-    if length != m * n {
-        return [][]int{}
-    }
+	ans := [][]int{}
+	if m*n != len(original) {
+		return ans
+	}
 
-    // append each row 
-    for i := 0; i < length; i+=n {
-        new = append(new, original[i:i+n])
-    }
-    return new
+	i := 0
+	subarray := []int{}
+	for i < len(original) {
+		subarray = append(subarray, original[i])
+		i++
 
+		if len(subarray) == n {
+			ans = append(ans, subarray)
+			subarray = []int{}
+		}
+	}
+
+	return ans
 }
